@@ -1,0 +1,96 @@
+
+
+dma_uart1_tx(string, strlen((char*)string));
+	_delay_ms(500);
+***********************************************
+
+	AHT_to_uart();
+***********************************************
+
+	sprintf(data_ds,"SRCH = %u \n\r",ds18_search());
+	usart1_send_str(data_ds);
+		_delay_ms(10);
+
+	sprintf(data_ds,"DS = %u \n\r",ds18_get() /16 );
+	usart1_send_str(data_ds);
+		_delay_ms(500);
+
+*******************************************************
+
+void GPIO()
+{
+	RCC->AHBENR |= RCC_AHBENR_GPIOAEN; 
+	RCC->AHBENR |= RCC_AHBENR_GPIOBEN; 
+
+	GPIOA->MODER |= ( 0x01 << (5*2)); // 5 pin/ 01
+// PA output 0x10
+
+	GPIOB->MODER &= ~( 3 << (1*2));// 1 pin
+	GPIOB->PUPDR |= ( 1 << (1*2)); //1 pin / up 01
+// PB input 0x00
+
+	GPIOB->MODER |= ( 0x01 << (6*2)); // 5 pin/ 01
+	GPIOB->MODER |= ( 0x01 << (7*2)); // 5 pin/ 01
+
+}
+
+**********************************************
+
+		sprintf(data_ds, "ALRMAR=0x%08lX \r\n", RTC->ALRMAR);
+		usart1_send_str(data_ds);
+			_delay_ms(500);
+
+
+
+**********************************************
+
+CLEAR_BIT(GPIOA->ODR, 1<<0);
+READ_BIT(GPIOA->IDR ,1<<0)==1) 
+
+
+
+
+*******************************************
+uint8_t start[3] = {0};
+
+if (ms_ticks - start[0] >= 1000)
+{
+
+
+start[0] = ms_ticks;
+}
+		
+
+**********************
+
+ uint32_t timeout = 10000;
+    while(!(RTC->ISR & RTC_ISR_RSF)) {
+        if(--timeout == 0) break; // Защита от зависания
+
+		*******************************************
+
+// Вывод  АЦП и температуры на дисплей
+/*	if (ms_ticks - start[2] >= 1000)
+	{
+	start[2] = ms_ticks;
+
+	ST7735_FillRect(0,13, 120, 40, 0x0000);
+
+	uint32_t data_adc = ADC_read()*3300/4095;
+	uint32_t data_temp = (data_adc - 907)/15;
+
+	char string[32];
+	sprintf(string, "ADC: %lu mV",data_adc);
+	ST7735_DrawString(3,13, string, 0xFFFF); // ADC
+
+		sprintf(string, "ADC: %lu \r\n",data_adc);
+		USART1_sendStr(string);
+
+	sprintf(string, "T: %lu *C",data_temp);
+	ST7735_DrawString(10,23, string, 0xFFFF); // temperature
+
+		sprintf(string, "T: %lu \r\n",data_temp);
+		USART1_sendStr(string);
+
+	}
+*/
