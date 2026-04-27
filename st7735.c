@@ -12,7 +12,6 @@ void ST7735_setPins(){
 
 	GPIOA->BSRR |= (1 << RST); 
 
-
 }
 
 void DATA_mode(){

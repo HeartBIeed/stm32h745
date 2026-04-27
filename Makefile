@@ -19,7 +19,7 @@ CFLAGS = -mcpu=$(MCPU) -g3 --specs=nano.specs -mthumb -mfloat-abi=soft -Wall -st
 -I$(INC_HDRS) -I$(INC_DRV) \
 -DSTM32H745xx -DCORE_CM7 
 
-all: build/$(TARGET).hex
+all: $(TARGET).hex
 
 build/%.o: %.c | build
 	$(CC) $(CFLAGS) -c -Os -ffunction-sections -fdata-sections -fstack-usage -o $@ $<
@@ -48,5 +48,5 @@ build/$(TARGET).elf: $(OBJ) $(SYS_OBJ) $(STARTUP).o $(LOADER)
 
 	@/bin/echo -e "\033[0m"
 
-build/$(TARGET).hex: build/$(TARGET).elf
+$(TARGET).hex: build/$(TARGET).elf
 	$(OBJCOPY) -O ihex $< $@

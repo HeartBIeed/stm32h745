@@ -89,3 +89,32 @@ void USART3_echo(){
 	
 	}	
 }
+
+	
+int USART_commands(){
+
+	if (strncmp((char*)usart_data_buffer,"st",2) == 0) 
+	{
+
+		char *command = strtok((char*)usart_data_buffer," ");
+		char *h_char = strtok(NULL, ",");
+		char *m_char = strtok(NULL, ",");
+
+		int h = atoi(h_char);
+		int m = atoi(m_char);
+
+		RTC_setTime(h,m);
+
+
+		char string[32];
+		sprintf(string, "SET TIME -> %2d:%2d \r\n",h,m);///!!!!!!!!
+		USART3_sendStr(string);
+	 	usart_data_buffer[0] = '\0';
+
+	 		return 1;
+
+	} else {
+			return 0;
+	}
+	
+}

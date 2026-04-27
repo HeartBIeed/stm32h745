@@ -3,13 +3,11 @@
 
 #include "main.h"
 
-#define PA4 4
-#define PA5 5
-#define PA6 6
-#define PA7 7
+#define SPI_SCK 5 // PA5
+#define MISO 6 // PA6
+#define MOSI 7 // PA7
 
 void SPI1_init();
 uint8_t SPI1_sendByte(uint8_t tx_data);
-void ST7735_test();
 
 #endif /* SPI_H_ */

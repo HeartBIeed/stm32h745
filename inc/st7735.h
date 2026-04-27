@@ -4,9 +4,9 @@
 #include "main.h"
 #include "fonts.h"
 
-#define RST 0
-#define AO 1
-#define CS 2
+#define RST 9
+#define AO 12
+#define CS 8
 
 #define SCREEN_WIDTH 128
 #define SCREEN_HEIGHT 160
@@ -21,6 +21,5 @@ void ST7735_DrawString(uint16_t x, uint16_t y, const char* str, ST7735_Color col
 void ST7735_DrawLine(int16_t x0, int16_t y0,int16_t x1, int16_t y1,ST7735_Color color);
 void bresenhamCircle(int16_t x0, int16_t y0, int16_t radius, ST7735_Color color);
 void bresenhamCircleFill(int16_t x0, int16_t y0, int16_t radius, ST7735_Color color);
-
 
 #endif /* ST7735_H_ */
