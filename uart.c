@@ -25,7 +25,7 @@ void USART3_init(uint16_t baud){
 	USART3->CR2 = 0;
 	USART3->CR3 = 0;
 			
-	USART3->BRR = FCPU/baud; 
+	USART3->BRR = FCPU/(baud*4); //FIX IT
 
 	USART3->CR1 |= USART_CR1_RXNEIE ; // interrupts
 	USART3->CR1 |= USART_CR1_TE | USART_CR1_RE | USART_CR1_UE; //tx rx usart enable

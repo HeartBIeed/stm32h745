@@ -5,7 +5,7 @@
 #include "fonts.h"
 
 #define RST 9
-#define AO 12
+#define AO 2
 #define CS 8
 
 #define SCREEN_WIDTH 128

@@ -7,17 +7,25 @@ void GPIO()
 	MODIFY_REG(GPIOE->MODER,
            (3 << (1 * 2)),
            (1 << (1 * 2)));
+
+/*	SET_BIT(RCC->AHB4ENR,RCC_AHB4ENR_GPIOAEN);
+	
+	MODIFY_REG(GPIOA->MODER,
+           (3 << (2 * 2)),
+           (1 << (2 * 2)));
+*/
 }
 
 void PE1_blink(){
 
-//	static uint32_t	start = 0;
-_delay_us(100000);
-//	if (ms_ticks - start >= 1000){
+	static uint32_t	start = 0;
+	if (ms_ticks - start >= 1000){
 
 	GPIOE->ODR ^= (1 << 1);
-//	start = ms_ticks;
-	//}
+	GPIOA->ODR ^= (1 << 2);
+
+	start = ms_ticks;
+	}
 }
 
 void usart_Time(){
@@ -38,21 +46,19 @@ int main(void){
 
 //SystemClock_HSE_8MHz();
 PLL_400MHz_enable();
+
 SysTick_init();
 DWT_init();
 
-GPIO();
 USART3_init(9600);
-RTC_init();
-//SPI1_init();
-	USART3_sendStr("\033[1;32m SPI1_init \n\r\033[0m");
-
-//ST7735_init();
-//	USART3_sendStr("\033[1;32m ST7735_init \n\r\033[0m");
-
-//ST7735_FillRect(0,0, 128, 160, BLACK); 
-
 I2C_init();
+RTC_init();
+SPI1_init();
+
+GPIO();
+
+ST7735_init();
+ST7735_FillRect(0,0, 128, 160, BLACK); 
 
 USART3_sendStr("\033[1;32m START \n\r\033[0m");
 
@@ -62,10 +68,10 @@ while(1)
 {
 
 
-	if (ms_ticks - start[2] >= 1000)
+	if (ms_ticks - start[2] >= 900)
 	{
 
-usart_Time();
+	Print_Time(3,3);
 
 	start[2] = ms_ticks;
 	}
@@ -75,16 +81,16 @@ usart_Time();
 	{
 
 	USART3_echo();
- USART_commands();
+ 	USART_commands();
 
 	start[1] = ms_ticks;
 	}
 
 
 
-	if (ms_ticks - start[0] >= 5000)
+	if (ms_ticks - start[0] >= 2000)
 	{
-	AHT_output(10, 10);
+	AHT_output(3, 25);
 	start[0] = ms_ticks;
 	}
 
