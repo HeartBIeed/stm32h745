@@ -29,10 +29,10 @@ void SPI1_init(){
 	SPI1->CFG1 = 0;
 	SPI1->CFG2 = 0;
 
-	SPI1->CFG1 |= (6<<28); // baud rate f/
+	SPI1->CFG1 |= (1<<28); // baud rate f/
 	SPI1->CFG1 |= (7<<0); // DSIZE /Data size 8 bit 0x111
 
-	SPI1->CR1 |= SPI_CR1_SSI; // SSI
+	SPI1->CR1 |= SPI_CR1_SSI; // SSI7
 
 	SPI1->CFG2 |= SPI_CFG2_SSM; // SSM Software slave management
 	SPI1->CFG2 |= (1<<22); // Master

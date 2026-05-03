@@ -22,8 +22,6 @@ void PE1_blink(){
 	if (ms_ticks - start >= 1000){
 
 	GPIOE->ODR ^= (1 << 1);
-	GPIOA->ODR ^= (1 << 2);
-
 	start = ms_ticks;
 	}
 }
@@ -71,7 +69,7 @@ while(1)
 	if (ms_ticks - start[2] >= 900)
 	{
 
-	Print_Time(3,3);
+	print_Time(3,3);
 
 	start[2] = ms_ticks;
 	}

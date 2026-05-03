@@ -76,7 +76,7 @@ void RTC_getTime(uint8_t *hour,uint8_t *min,uint8_t *sec){
 											// 0xF read 4 bits
 }
 
-void Print_Time(uint8_t x, uint8_t y){
+void print_Time(uint8_t x, uint8_t y){
 
 	static char text_old[20]={"\0"};	
 
