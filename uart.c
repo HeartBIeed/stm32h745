@@ -1,6 +1,6 @@
 #include "uart.h"
 
-volatile uint8_t usart_data_buffer[32]; //буффер uart
+volatile uint8_t usart_data_buffer[32]; 
 volatile uint8_t usart_index_buffer =0;
 volatile uint8_t USART3_flag =0;
 
@@ -91,7 +91,7 @@ void USART3_echo(){
 }
 
 	
-int USART_commands(){
+int USART_cmdHandler(){
 
 	if (strncmp((char*)usart_data_buffer,"st",2) == 0) 
 	{
@@ -107,12 +107,11 @@ int USART_commands(){
 
 
 		char string[32];
-		sprintf(string, "SET TIME -> %2d:%2d \r\n",h,m);///!!!!!!!!
+		sprintf(string, "SET TIME -> %2d:%2d \r\n",h,m);
 		USART3_sendStr(string);
 	 	usart_data_buffer[0] = '\0';
 
 	 		return 1;
-
 	} else {
 			return 0;
 	}

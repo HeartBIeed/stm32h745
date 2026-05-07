@@ -155,11 +155,13 @@ void I2C_scan(){
 
 	for (addr = 0x08; addr < 0x78; addr++)
 	{
-		if (I2C_checkAddress(addr)) 
-		{
-			USART3_sendStr("\n\r I2C FIND: 0x");
-			itoa(addr,str,16);
-			USART3_sendStr(str);
+		_delay_ms(1);
+
+		if (I2C_checkAddress(addr)) {
+
+		USART3_sendStr("\n\r I2C FIND: 0x");
+		itoa(addr,str,16);
+		USART3_sendStr(str);
 		} 
 	}
 

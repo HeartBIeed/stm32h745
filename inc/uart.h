@@ -13,7 +13,7 @@ void USART3_sendByte(char tx_data); // отправка байта
 void USART3_sendStr(char *str); // отправка строки - принимаем строковый массив
 void USART3_IRQHandler(); // обработчик прерывания
 void USART3_echo();
-int USART_commands();
+int USART_cmdHandler();
 
 extern volatile uint8_t usart_data_buffer[32]; //буффер uart
 extern volatile uint8_t usart_index_buffer;

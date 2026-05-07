@@ -7,18 +7,17 @@ void AHT_output(uint8_t x, uint8_t y){
 	uint8_t buffer[6];
 	char string[41];
 
+	if (I2C_checkAddress(0x38)){
 
-	if (I2C_checkAddress(0x38))
-		{
+		USART3_sendStr("AHT EN\n\r");
+		ST7735_DrawString(110,3, "X",BLACK,Font_7x10);
 
-			USART3_sendStr("AHT EN\n\r");
-			ST7735_DrawString(110,3, "X",BLACK,Font_11x18);
-
-		} else {
-			USART3_sendStr("I2C none 0x38\n\r");
-			ST7735_DrawString(110,3, "X",RED,Font_11x18);
-			return;
-		}
+	} else {
+	
+		USART3_sendStr("AHT NOT FOUND (0x38)\n\r");
+		ST7735_DrawString(110,3, "X",RED,Font_7x10);
+		return;
+	}
 
 	I2C_writeByte(0x38,init_aht20,3);
 			_delay_ms(50);
@@ -34,36 +33,39 @@ void AHT_output(uint8_t x, uint8_t y){
 	uint32_t Humi = raw_H * 100 / 1048576; //1048576 = 2^20
 	uint32_t Temp = raw_T * 200 / 1048576 - 50;
 
+//************ OUTPUT TO USART ************
+
 	sprintf(string,"AHT20_H: %lu\n\r",Humi);
 	USART3_sendStr(string);
 
 	sprintf(string,"AHT20_T: %lu\n\r",Temp);
 	USART3_sendStr(string);
 
-static uint32_t Humi_old;
-static uint32_t Temp_old;
+//*********** OUTPUT TO DISPLAY ***********
 
-if (!(Humi_old == Humi)){
+	static uint32_t Humi_old;
+	static uint32_t Temp_old;
 
-	sprintf(string,"Humi: %lu %%",Humi_old);
-	ST7735_DrawString(x,y, string,BLACK,Font_11x18);
+	if (!(Humi_old == Humi)){
 
-	sprintf(string,"Humi: %lu %%",Humi);
-	ST7735_DrawString(x,y, string,GREEN,Font_11x18);
-}
+		sprintf(string,"H: %lu %%",Humi_old);
+		ST7735_DrawString(x,y, string,BLACK,Font_7x10);
 
-if (!(Temp_old == Temp)){
+		sprintf(string,"H: %lu %%",Humi);
+		ST7735_DrawString(x,y, string,GREEN,Font_7x10);
+	}
 
-	sprintf(string,"Temp: %lu *C",Temp_old);
-	ST7735_DrawString(x,y+25, string,BLACK,Font_11x18);
+	if (!(Temp_old == Temp)){
 
-	sprintf(string,"Temp: %lu *C",Temp);
-	ST7735_DrawString(x,y+25, string,GREEN,Font_11x18);
-}
+		sprintf(string,"T: %lu*C",Temp_old);
+		ST7735_DrawString(x,y+12, string,BLACK,Font_7x10);
 
-Humi_old = Humi;
-Temp_old = Temp;
+		sprintf(string,"T: %lu*C",Temp);
+		ST7735_DrawString(x,y+12, string,GREEN,Font_7x10);
+	}
 
+	Humi_old = Humi;
+	Temp_old = Temp;
 
 	string[0] = '\0';
 }

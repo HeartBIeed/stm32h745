@@ -1,10 +1,9 @@
-
-
+_delay_ms();
+_delay_us();
+***********************************************
 dma_uart1_tx(string, strlen((char*)string));
 	_delay_ms(500);
-***********************************************
 
-	AHT_to_uart();
 ***********************************************
 
 	sprintf(data_ds,"SRCH = %u \n\r",ds18_search());
@@ -15,40 +14,19 @@ dma_uart1_tx(string, strlen((char*)string));
 	usart1_send_str(data_ds);
 		_delay_ms(500);
 
-*******************************************************
-
-void GPIO()
-{
-	RCC->AHBENR |= RCC_AHBENR_GPIOAEN; 
-	RCC->AHBENR |= RCC_AHBENR_GPIOBEN; 
-
-	GPIOA->MODER |= ( 0x01 << (5*2)); // 5 pin/ 01
-// PA output 0x10
-
-	GPIOB->MODER &= ~( 3 << (1*2));// 1 pin
-	GPIOB->PUPDR |= ( 1 << (1*2)); //1 pin / up 01
-// PB input 0x00
-
-	GPIOB->MODER |= ( 0x01 << (6*2)); // 5 pin/ 01
-	GPIOB->MODER |= ( 0x01 << (7*2)); // 5 pin/ 01
-
-}
-
-**********************************************
-
-		sprintf(data_ds, "ALRMAR=0x%08lX \r\n", RTC->ALRMAR);
-		usart1_send_str(data_ds);
-			_delay_ms(500);
-
 
 
 **********************************************
 
-CLEAR_BIT(GPIOA->ODR, 1<<0);
-READ_BIT(GPIOA->IDR ,1<<0)==1) 
+SET_BIT(REG, BIT)
 
+CLEAR_BIT(REG, BIT)
 
+READ_BIT(REG, BIT)
 
+MODIFY_REG(REG, CLEARMASK, SETMASK)  
+
+POSITION_VAL(VAL)
 
 *******************************************
 uint8_t start[3] = {0};
@@ -67,30 +45,75 @@ start[0] = ms_ticks;
     while(!(RTC->ISR & RTC_ISR_RSF)) {
         if(--timeout == 0) break; // Защита от зависания
 
-		*******************************************
+*******************************************
 
-// Вывод  АЦП и температуры на дисплей
-/*	if (ms_ticks - start[2] >= 1000)
-	{
-	start[2] = ms_ticks;
+\033[0m   RESET
 
-	ST7735_FillRect(0,13, 120, 40, 0x0000);
+# TEXT
+\033[30m  black
+\033[31m  red
+\033[32m  green
+\033[33m  yellow
+\033[34m  blue
+\033[35m  magenta
+\033[36m  cyan
+\033[37m  white
 
-	uint32_t data_adc = ADC_read()*3300/4095;
-	uint32_t data_temp = (data_adc - 907)/15;
+# BRIGHT TEXT
+\033[90m  bright black (gray)
+\033[91m  bright red
+\033[92m  bright green
+\033[93m  bright yellow
+\033[94m  bright blue
+\033[95m  bright magenta
+\033[96m  bright cyan
+\033[97m  bright white
 
-	char string[32];
-	sprintf(string, "ADC: %lu mV",data_adc);
-	ST7735_DrawString(3,13, string, 0xFFFF); // ADC
+# BACKGROUND
+\033[40m  bg black
+\033[41m  bg red
+\033[42m  bg green
+\033[43m  bg yellow
+\033[44m  bg blue
+\033[45m  bg magenta
+\033[46m  bg cyan
+\033[47m  bg white
 
-		sprintf(string, "ADC: %lu \r\n",data_adc);
-		USART1_sendStr(string);
 
-	sprintf(string, "T: %lu *C",data_temp);
-	ST7735_DrawString(10,23, string, 0xFFFF); // temperature
+*************************************
 
-		sprintf(string, "T: %lu \r\n",data_temp);
-		USART1_sendStr(string);
+    BLACK       = 0x0000,
+    WHITE       = 0xFFFF,
+    RED         = 0xF800,
+    GREEN       = 0x07E0,
+    BLUE        = 0x001F,
+    YELLOW      = 0xFFE0,
+    CYAN        = 0x07FF,
+    MAGENTA     = 0xF81F,
+    ORANGE      = 0xFD20,
+    BROWN       = 0xA145,
 
-	}
-*/
+    // Градации серого
+    DARKGRAY    = 0x4208,
+    GRAY        = 0x8410,
+    LIGHTGRAY   = 0xC618,
+
+    SKYBLUE     = 0x867D,
+    NAVY        = 0x0010,
+    TEAL        = 0x0410,
+    OLIVE       = 0x7BE0,
+    MAROON      = 0x7800,
+    GOLD        = 0xFEA0,
+
+    SOFT_RED    = 0xF104,
+    SOFT_GREEN  = 0x87F0,
+    SOFT_BLUE   = 0x545F,
+
+
+
+extern FontDef Font_7x10;
+extern FontDef Font_11x18;
+extern FontDef Font_11x18_Cyrillic;
+extern FontDef Font_16x26;
+
+*************************************************

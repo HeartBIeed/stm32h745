@@ -66,7 +66,7 @@ void RTC_setTime(uint8_t h,uint8_t m){
 }
 
 
-void RTC_getTime(uint8_t *hour,uint8_t *min,uint8_t *sec){
+void RTC_getTime(volatile uint8_t *hour,volatile uint8_t *min,volatile uint8_t *sec){
 
 	uint32_t tr = RTC->TR;
 
@@ -76,17 +76,17 @@ void RTC_getTime(uint8_t *hour,uint8_t *min,uint8_t *sec){
 											// 0xF read 4 bits
 }
 
-void print_Time(uint8_t x, uint8_t y){
+void RTC_printTime(uint8_t x, uint8_t y){
 
 	static char text_old[20]={"\0"};	
 
 	RTC_getTime(&hour,&min,&sec);
 	char text[20]={"\0"};	
 
-	ST7735_DrawString(x,y, text_old,BLACK,Font_11x18);
+	ST7735_DrawString(x,y, text_old,BLACK,Font_7x10);
 
 	sprintf(text, "%02d:%02d:%02d",hour,min,sec);
-	ST7735_DrawString(x,y, text,ORANGE,Font_11x18);
+	ST7735_DrawString(x,y, text,ORANGE,Font_7x10);
 
 	strcpy(text_old,text);
 }

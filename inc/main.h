@@ -21,9 +21,13 @@
 #include "uart.h"
 #include "i2c.h"
 #include "spi.h"
+#include "spi2.h"
+#include "tring.h"
 
 #include "aht20.h"
 #include "st7735.h"
+#include "bmp280.h"
+#include "button.h"
 
 
 #endif /* MAIN_H_ */
