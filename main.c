@@ -61,6 +61,7 @@ SPI1_init();
 GPIO();
 Buttons_init();
 ST7735_init();
+SSD1306_init();
 
 ST7735_FillRect(0,0, 128, 160, BLACK); 
 USART3_sendStr("\033[1;32m START \n\r\033[0m");
@@ -97,8 +98,8 @@ while(1) {
 	if (ms_ticks - start[0] >= 2000){
 
 	AHT_output(3, 15);
-	BMP280_print(3,140);
-
+	//BMP280_print(3,140);
+	//I2C_scan();
 	start[0] = ms_ticks;
 	}
 
@@ -116,6 +117,10 @@ void PE1_blink(){
 	GPIOE->ODR ^= (1 << 1);
 
 	RTC_printTime(3,3); // to diplay
+
+if (READ_BIT(GPIOE->ODR,(1 << 1)))	SSD1306_fill(0xFF);
+else 								SSD1306_fill(0x00);
+
 
 	start = ms_ticks;
 	}

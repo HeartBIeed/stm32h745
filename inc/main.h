@@ -28,6 +28,7 @@
 #include "st7735.h"
 #include "bmp280.h"
 #include "button.h"
+#include "ssd1306.h"
 
 
 #endif /* MAIN_H_ */
