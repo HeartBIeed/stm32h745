@@ -91,12 +91,11 @@ void USART3_echo(){
 }
 
 	
-int USART_cmdHandler(){
+void USART_cmdHandler(){
 
 	if (strncmp((char*)usart_data_buffer,"st",2) == 0) 
 	{
-
-		char *command = strtok((char*)usart_data_buffer," ");
+					   strtok((char*)usart_data_buffer," ");
 		char *h_char = strtok(NULL, ",");
 		char *m_char = strtok(NULL, ",");
 
@@ -109,11 +108,33 @@ int USART_cmdHandler(){
 		char string[32];
 		sprintf(string, "SET TIME -> %2d:%2d \r\n",h,m);
 		USART3_sendStr(string);
-	 	usart_data_buffer[0] = '\0';
+	 	usart_data_buffer[0] = '\0'; // обязательно стираем строку команды
 
-	 		return 1;
-	} else {
-			return 0;
 	}
-	
+/*
+	if (strncmp((char*)usart_data_buffer,"p",1) == 0) 
+	{//прогресс бар на ssd1306
+		 				  strtok((char*)usart_data_buffer," ");
+		char *proc_char = strtok(NULL, " ");
+
+		int proc = atoi(proc_char);
+		
+		SSD1306_drawString(proc_char,6,0,ssd1306_font5x7);
+		SSD1306_drawProgress(proc,7);
+		usart_data_buffer[0] = '\0';
+
+	}
+*/
+
+		if (strncmp((char*)usart_data_buffer,"inv",3) == 0) 
+	{//inverse ssd1306
+		 				  strtok((char*)usart_data_buffer," ");
+		char *state = strtok(NULL, " ");
+
+		int state_int = atoi(state);
+		
+		SSD1306_inverse(state_int);
+
+		usart_data_buffer[0] = '\0';
+	}
 }

@@ -53,6 +53,9 @@ void AHT_output(uint8_t x, uint8_t y){
 
 		sprintf(string,"H: %lu %%",Humi);
 		ST7735_DrawString(x,y, string,GREEN,Font_7x10);
+//----------------------------------------------------------
+		SSD1306_drawString(string,3,40,ssd1306_font5x7);
+		SSD1306_drawProgress(Humi,4);
 	}
 
 	if (!(Temp_old == Temp)){
@@ -62,6 +65,10 @@ void AHT_output(uint8_t x, uint8_t y){
 
 		sprintf(string,"T: %lu*C",Temp);
 		ST7735_DrawString(x,y+12, string,GREEN,Font_7x10);
+//----------------------------------------------------------
+		SSD1306_drawString(string,6,40,ssd1306_font5x7);
+		SSD1306_drawProgress(Temp,7);
+
 	}
 
 	Humi_old = Humi;
@@ -69,3 +76,7 @@ void AHT_output(uint8_t x, uint8_t y){
 
 	string[0] = '\0';
 }
+
+
+
+

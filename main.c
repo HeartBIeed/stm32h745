@@ -42,6 +42,8 @@ void BMP280_print(uint8_t x, uint8_t y){
 
 
 
+
+
 // ***************** main *****************
 int main(void){
 
@@ -67,6 +69,9 @@ ST7735_FillRect(0,0, 128, 160, BLACK);
 USART3_sendStr("\033[1;32m START \n\r\033[0m");
 
 uint32_t start[4] = {0};
+
+SSD1306_drawString("SSD1306 ENABLE",0,20,ssd1306_font5x7);
+SSD1306_drawString("HELLO WORLD",1,30,ssd1306_font5x7);
 
 while(1) {
 
@@ -117,11 +122,11 @@ void PE1_blink(){
 	GPIOE->ODR ^= (1 << 1);
 
 	RTC_printTime(3,3); // to diplay
-
+/*
 if (READ_BIT(GPIOE->ODR,(1 << 1)))	SSD1306_fill(0xFF);
 else 								SSD1306_fill(0x00);
 
-
+*/
 	start = ms_ticks;
 	}
 }
