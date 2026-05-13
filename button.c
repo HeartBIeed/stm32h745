@@ -15,26 +15,17 @@ void Buttons_init(){
 
 	SET_BIT(GPIOE->PUPDR,(1<<10*2));
 	SET_BIT(GPIOE->PUPDR,(1<<12*2));
-	SET_BIT(GPIOE->PUPDR,(1<<14*2));	
+	SET_BIT(GPIOE->PUPDR,(1<<14*2));
+// PE 10/12/14 на вход
 }
 
 
 void Buttons_Handler(){
 
-	static uint8_t x=100, y=140, y_old;
+//    if (Debounce(10));
+//    if (Debounce(12));
+//    if (Debounce(14));
 
-    if (Debounce(10)) y += 20;
-    if (Debounce(12)) y -= 20;
-
-	if (y>140) y = 140;
-	if (y<20) y = 20;
-
-	if (y != y_old){
-
-		bresenhamCircleFill(x, y_old, 10, BLACK);
-		bresenhamCircleFill(x, y, 10, MAGENTA);
-		y_old = y;
-	}
 }
 
 

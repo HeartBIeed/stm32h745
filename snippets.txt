@@ -1,4 +1,4 @@
-_delay_ms();
+﻿_delay_ms();
 _delay_us();
 ***********************************************
 dma_uart1_tx(string, strlen((char*)string));
@@ -117,3 +117,17 @@ extern FontDef Font_11x18_Cyrillic;
 extern FontDef Font_16x26;
 
 *************************************************
+
+
+
+
+SSD1306_drawString("SSD1306 ENABLE",0,20,ssd1306_font5x7);
+SSD1306_drawString("HELLO WORLD",1,30,ssd1306_font5x7);
+
+
+		SSD1306_drawString(string,3,40,ssd1306_font5x7);
+		SSD1306_drawProgress(Humi,4);
+		SSD1306_drawString(string,6,40,ssd1306_font5x7);
+		SSD1306_drawProgress(Temp,7);
+
+

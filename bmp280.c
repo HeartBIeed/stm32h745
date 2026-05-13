@@ -86,7 +86,7 @@ static union _bmp280_cal_union {
 		int16_t  dig_p8;
 		int16_t  dig_p9;
 	}
-} bmp280_cal;
+}bmp280_cal;
 
 
 static void bmp280_getcalibration(void){
@@ -185,6 +185,30 @@ uint32_t bmp280_measure(void){
 	return _bmp280_pres;
 }
 
+
+
+void BMP280_print(uint8_t x, uint8_t y){
+
+	char string[32];
+	static uint32_t pressure_old;
+
+	uint32_t pressure = bmp280_measure();
+
+	sprintf(string,"bmp: %lu ",pressure);
+	ST7735_DrawString(x,y, string,CYAN,Font_11x18);
+
+	if (!(pressure_old == pressure)){
+
+		sprintf(string,"bmp: %lu ",pressure_old);
+		ST7735_DrawString(x,y, string,BLACK,Font_11x18);
+
+		sprintf(string,"bmp: %lu ",pressure);
+		ST7735_DrawString(x,y, string,CYAN,Font_11x18);
+		}
+
+	pressure_old = pressure;
+	string[0] = '\0';
+}
 
 
 

@@ -169,38 +169,3 @@ void I2C_scan(){
 }
 
 
-/*
-void I2C_start(int addr,int nbytes){
-
-	I2C1->CR2 = 0; 
-	
-	I2C1->CR2 |= (nbytes<< 16); //nbytes
-	I2C1->CR2 |= (addr << 1); // set slave address
-	I2C1->CR2 |= (1 << 13); //start 
-}
-
-void I2C_send(uint8_t* data){
-	for (int i = 0; i < nbytes; ++i)
-	{
-	timeout = TIMEOUT;
-		while (!(I2C1->ISR & (I2C_ISR_TXIS| I2C_ISR_NACKF))){ //wait empty tx buffer
-
-			if (I2C1->ISR & I2C_ISR_NACKF)
-			{
-			I2C1->ICR = I2C_ICR_NACKCF;
-			return;
-			}
-
-			if (--timeout ==0) return;
-
-		}	
-	I2C1->TXDR = data[i];// send 
-	}
-}
-
-void I2C_stop(){
-
-		I2C1->CR2 |= (1 << 14); //stop
-
-}
-*/

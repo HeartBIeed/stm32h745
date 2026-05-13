@@ -88,6 +88,9 @@ void RTC_printTime(uint8_t x, uint8_t y){
 	sprintf(text, "%02d:%02d:%02d",hour,min,sec);
 	ST7735_DrawString(x,y, text,ORANGE,Font_7x10);
 
+LCD_send_string(text,5,1);
+
+
 	strcpy(text_old,text);
 }
 

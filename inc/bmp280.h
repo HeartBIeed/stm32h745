@@ -29,5 +29,6 @@
 
 uint8_t bmp280_init(void);
 uint32_t bmp280_measure(void);
+void BMP280_print(uint8_t x, uint8_t y);
 
 #endif /* BMP280_H_ */
