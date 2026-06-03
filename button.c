@@ -23,8 +23,8 @@ void Buttons_init(){
 void Buttons_Handler(){
 
 //    if (Debounce(10));
-//    if (Debounce(12));
-//    if (Debounce(14));
+    if (Debounce(14)) I2C_scan();
+    if (Debounce(12)) TMP100();
 
 }
 

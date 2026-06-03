@@ -9,7 +9,6 @@ void AHT_output(uint8_t x, uint8_t y){
 
 	if (I2C_checkAddress(0x38)){
 
-		USART3_sendStr("AHT EN\n\r");
 		ST7735_DrawString(110,3, "X",BLACK,Font_7x10);
 
 	} else {
@@ -35,7 +34,7 @@ void AHT_output(uint8_t x, uint8_t y){
 
 //************ OUTPUT TO USART ************
 
-	sprintf(string,"AHT20_H: %lu\n\r",Humi);
+	sprintf(string,"\n AHT20_H: %lu\n\r",Humi);
 	USART3_sendStr(string);
 
 	sprintf(string,"AHT20_T: %lu\n\r",Temp);
@@ -49,19 +48,19 @@ void AHT_output(uint8_t x, uint8_t y){
 	if (!(Humi_old == Humi)){
 
 		sprintf(string,"H: %lu %%",Humi_old);
-		ST7735_DrawString(x,y, string,BLACK,Font_7x10);
+		ST7735_DrawString(x,y, string,BLACK,Font_11x18);
 
 		sprintf(string,"H: %lu %%",Humi);
-		ST7735_DrawString(x,y, string,GREEN,Font_7x10);
+		ST7735_DrawString(x,y, string,GREEN,Font_11x18);
 	}
 
 	if (!(Temp_old == Temp)){
 
 		sprintf(string,"T: %lu*C",Temp_old);
-		ST7735_DrawString(x,y+12, string,BLACK,Font_7x10);
+		ST7735_DrawString(x,y+20, string,BLACK,Font_11x18);
 
 		sprintf(string,"T: %lu*C",Temp);
-		ST7735_DrawString(x,y+12, string,GREEN,Font_7x10);
+		ST7735_DrawString(x,y+20, string,GREEN,Font_11x18);
 	}
 
 	Humi_old = Humi;

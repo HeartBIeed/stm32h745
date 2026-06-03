@@ -83,13 +83,10 @@ void RTC_printTime(uint8_t x, uint8_t y){
 	RTC_getTime(&hour,&min,&sec);
 	char text[20]={"\0"};	
 
-	ST7735_DrawString(x,y, text_old,BLACK,Font_7x10);
+	ST7735_DrawString(x,y, text_old,BLACK,Font_11x18);
 
 	sprintf(text, "%02d:%02d:%02d",hour,min,sec);
-	ST7735_DrawString(x,y, text,ORANGE,Font_7x10);
-
-LCD_send_string(text,5,1);
-
+	ST7735_DrawString(x,y, text,ORANGE,Font_11x18);
 
 	strcpy(text_old,text);
 }

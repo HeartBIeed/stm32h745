@@ -1,5 +1,6 @@
 TARGET    = main
 MCPU      = cortex-m7
+MFPU      = fpv5-d16
 STARTUP   = startup_stm32h745zitx
 LOADER    = STM32H745ZITX_FLASH.ld
 OBJCOPY   = arm-none-eabi-objcopy
@@ -15,7 +16,7 @@ OBJ       := $(patsubst %.c,build/%.o,$(SRC))
 SYS_SRC   = Core/Src/system_stm32h7xx_dualcore_boot_cm4_cm7.c
 SYS_OBJ   = build/system_stm32h7xx_dualcore_boot_cm4_cm7.o
 
-CFLAGS = -mcpu=$(MCPU) -g3 --specs=nano.specs -mthumb -mfloat-abi=soft -Wall -std=gnu11 \
+CFLAGS = -mcpu=$(MCPU) -mfpu=$(MFPU) -g3 --specs=nano.specs -mthumb -mfloat-abi=hard -Wall -std=gnu11 \
 -I$(INC_HDRS) -I$(INC_DRV) \
 -DSTM32H745xx -DCORE_CM7 
 
@@ -33,14 +34,17 @@ $(STARTUP).o: $(ST_INCL)/$(STARTUP).s | build
 
 build/$(TARGET).elf: $(OBJ) $(SYS_OBJ) $(STARTUP).o $(LOADER)
 	$(CC) -o $@ $(OBJ) $(SYS_OBJ) $(STARTUP).o \
-	-mcpu=$(MCPU) -T"$(LOADER)" \
+	-mcpu=$(MCPU) \
+	-mfpu=$(MFPU) \
+	-mfloat-abi=hard \
+	-T"$(LOADER)" \
 	-Wl,-Map=build/$(TARGET).map \
 	-Wl,--gc-sections \
 	-Wl,--start-group -lc -lm \
 	-Wl,--end-group \
 	--specs=nosys.specs \
     --specs=nano.specs \
-	-mfloat-abi=soft -mthumb 
+	-mthumb 
 
 	@/bin/echo -e "\033[1;33m Success...\n"
 
